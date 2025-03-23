@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Dtw8MvPVSUdRjsZoAhsosNQuKwF6MK3IsM/lrsR7Jm83nklRyu9EUUXpG1a0TattbEpoS3cTIDTtRkBJxUHBzQ==",
+  "success": true,
+  "projectFilePath": "/home/ania3614/Documents/6 semester/functional_programming/F#/NUmbers/NUmbers.fsproj",
+  "expectedPackageFiles": [
+    "/home/ania3614/.nuget/packages/fsharp.core/8.0.102/fsharp.core.8.0.102.nupkg.sha512"
+  ],
+  "logs": []
+}
