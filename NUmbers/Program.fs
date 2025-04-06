@@ -63,6 +63,35 @@ let rec bypassDigits (num: int) (func: int -> int -> int) (accum: int) : int =
         0 -> accum
         | _ -> bypassDigits (int num / 10) func (func (num % 10) accum) 
 
+let rec bypassDigitsWithCondition (num: int) (twoArgFunc: int -> int -> int) (accum: int) (condition: int -> bool) : int =
+    match num with
+    0 -> accum
+    | _ when (condition (num % 10)) = true -> bypassDigitsWithCondition (num / 10) twoArgFunc (twoArgFunc (num % 10) accum) condition
+    | _ -> bypassDigitsWithCondition (num / 10) twoArgFunc accum condition
+
+
+
+let favLang (lang: string) : unit =
+     let result =
+         match lang with
+             "F#" | "Prolog" -> "ты подлиза"
+             | "java" -> "интересный выбор"
+             | "python" -> "крутой"
+             | _ -> "ясно"
+ 
+     result |> System.Console.WriteLine
+
+let rec GCD (a: int, b: int) : int =
+    match b with
+    0 -> a
+    | _ -> GCD (b, a % b)
+
+let rec bypassMutuallyPrimeComponentsInNumber (current: int) (num: int) (func: int -> int -> int) (accum: int) : int =
+    match current with
+    x when x >= num -> accum
+    | x when GCD(num, x) = 1 -> bypassMutuallyPrimeComponentsInNumber (current+1) num func (func current accum)
+    | _ -> bypassMutuallyPrimeComponentsInNumber (current+1) num func accum
+
 [<EntryPoint>]
 let main (args: string[]) =
 // №1
@@ -130,5 +159,37 @@ let main (args: string[]) =
     let mult_digits = bypassDigits 1234 mult 1
     System.Console.WriteLine("Произведение цифр числа: {0}", mult_digits)
 
+    //№9-10
+    let min_function = fun a b -> if a < b then a else b
+    let evenCondition = fun a -> if a % 2 = 0 then true else false
+    let min_digit = bypassDigitsWithCondition 1234 min_function 10 evenCondition
+    System.Console.WriteLine("Минимальная четная цифра числа: {0}", min_digit)
 
-    0
+    let max_function = fun a b -> if a > b then a else b
+    let oddCondition = fun a -> if a % 2 <> 0 then true else false
+    let max_digit = bypassDigitsWithCondition 1234 max_function 0 oddCondition
+    System.Console.WriteLine("Максимальная нечетная цифра числа: {0}", max_digit)
+
+    let plus = fun a b -> a + b
+    let notOne = fun a -> if a <> 1 then true else false
+    let plus_digits = bypassDigitsWithCondition 1234 plus 0 notOne
+    System.Console.WriteLine("Сумма цифр числа, которые не равны 1: {0}", plus_digits)
+
+    let mult = fun a b -> a * b
+    let notThree = fun a -> if a <> 3 then true else false
+    let mult_digits = bypassDigitsWithCondition 1234 mult 1 notThree
+    System.Console.WriteLine("Произведение цифр числа, которые не равны 3: {0}", mult_digits)
+
+    //№11-12
+    System.Console.Write("Какой Ваш любимый язык: ")
+    let lang_choice = System.Console.ReadLine()
+    favLang lang_choice
+    favLang "java"
+    favLang "С++"
+
+    //№13   
+    let res = bypassMutuallyPrimeComponentsInNumber 1 10 (fun a b -> a + b) 0
+    System.Console.WriteLine("{0}", res)
+
+    
+    0   
