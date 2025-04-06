@@ -27,4 +27,3 @@
 /home/ania3614/Documents/6 semester/functional_programming/F#/NUmbers/obj/Debug/net8.0/NUmbers.pdb
 /home/ania3614/Documents/6 semester/functional_programming/F#/NUmbers/obj/Debug/net8.0/NUmbers.genruntimeconfig.cache
 /home/ania3614/Documents/6 semester/functional_programming/F#/NUmbers/obj/Debug/net8.0/ref/NUmbers.dll
-/home/ania3614/Documents/6 semester/functional_programming/F#/NUmbers/obj/Debug/net8.0/NUmbers.sourcelink.json

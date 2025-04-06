@@ -5,6 +5,7 @@ type SolveQuadratic =
     | Linear of float
     | Quadratic of float * float
 
+
 let solveQuadr a b c =
         let D = b * b - 4. * a * c
         if a = 0. then
@@ -13,6 +14,17 @@ let solveQuadr a b c =
         else
             if D < 0. then None
             else Quadratic(( (-b + sqrt(D)) / (2. * a), (-b - sqrt(D)) / (2. * a) ))
+
+let squareCircle r = 
+    (System.Math.PI * r ** 2.0)
+
+let volume_cylinder_through_superpos (r, h) =
+    let square_cylinder_base = squareCircle r
+    h * square_cylinder_base
+
+let volume_cylinder_through_carry r h =
+    let square_cylinder_base = squareCircle r
+    h * square_cylinder_base
 
 let rec cirfrusum n =
     if n = 0 then 0
@@ -41,6 +53,16 @@ let rec factcifr n =
             factCifri n1 newfact
     factCifri n 1
 
+let chooseFunction (digitSum: bool) =
+        match digitSum with
+        true -> cirfrusum 
+        | false -> factcifr
+
+let rec bypassDigits (num: int) (func: int -> int -> int) (accum: int) : int =
+        match num with
+        0 -> accum
+        | _ -> bypassDigits (int num / 10) func (func (num % 10) accum) 
+
 [<EntryPoint>]
 let main (args: string[]) =
 // №1
@@ -58,7 +80,18 @@ let main (args: string[]) =
         | Linear(x) -> System.Console.WriteLine("Единственный корень: {0}", x)
         | Quadratic(x, y) -> System.Console.WriteLine("Корни: {0} {1}", x, y)
 
+   // №3
+    System.Console.WriteLine("Введите радиус и высоту цилиндра:")
+    let r = Double.Parse(System.Console.ReadLine())
+    let h = Double.Parse(System.Console.ReadLine())
+    
+    let volume_superpos = volume_cylinder_through_superpos (r, h)
+    System.Console.WriteLine("(Суперпозиция) Объем цилиндра с радиусом основания {0} и высотой {1}: {2}", r, h, volume_superpos)
 
+    let volume_carry = volume_cylinder_through_carry r h
+    System.Console.WriteLine("(Каррирование) Объем цилиндра с радиусом основания {0} и высотой {1}: {2}", r, h, volume_carry)
+
+  //№4-5
     let b = 12
     let a = cirfrusum b
     let c = sumCifr b
@@ -71,5 +104,31 @@ let main (args: string[]) =
     System.Console.WriteLine(v)
     System.Console.WriteLine(h)
 
-    
+
+    //№6
+    let factor = chooseFunction false
+    Console.WriteLine("Результат: {0}", (factor 12))
+    Console.WriteLine("Результат: {0}", (factor 12))
+    let factor1 = chooseFunction true
+    Console.WriteLine("Результат: {0}", (factor1 12))
+    Console.WriteLine("Результат: {0}", (factor1  12))
+
+    //№7-8
+    let min_function = fun a b -> if a < b then a else b
+    let min_digit =bypassDigits 1234 min_function 10
+    System.Console.WriteLine("Минимальная цифра числа: {0}", min_digit)
+
+    let max_function = fun a b -> if a > b then a else b
+    let max_digit = bypassDigits 1234 max_function 0
+    System.Console.WriteLine("Максимальная цифра числа: {0}", max_digit)
+
+    let plus = fun a b -> a + b
+    let plus_digits = bypassDigits 1234 plus 0
+    System.Console.WriteLine("Сумма цифр числа: {0}", plus_digits)
+
+    let mult = fun a b -> a * b
+    let mult_digits = bypassDigits 1234 mult 1
+    System.Console.WriteLine("Произведение цифр числа: {0}", mult_digits)
+
+
     0
