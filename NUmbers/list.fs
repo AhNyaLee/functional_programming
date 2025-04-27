@@ -1,3 +1,6 @@
+namespace WorkingWithLists
+
+open System
 // Определение списка Черча
 type ChurchList<'T> = 
     | Nil 

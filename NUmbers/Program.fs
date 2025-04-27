@@ -87,18 +87,21 @@ let rec GCD (a: int, b: int) : int =
     | _ -> GCD (b, a % b)
 
 let rec bypassMutuallyPrimeComponentsInNumber (current: int) (num: int) (func: int -> int -> int) (accum: int) : int =
-    match current with
-    x when x >= num -> accum
-    | x when GCD(num, x) = 1 -> bypassMutuallyPrimeComponentsInNumber (current+1) num func (func current accum)
-    | _ -> bypassMutuallyPrimeComponentsInNumber (current+1) num func accum
+     match current with
+        x when x >= num -> accum
+        | x when GCD(num, x) = 1 -> bypassMutuallyPrimeComponentsInNumber (current+1) num func (func current accum)
+        | _ -> bypassMutuallyPrimeComponentsInNumber (current+1) num func accum
+ 
 
+let EulerFunction (num: int) : int =
+ bypassMutuallyPrimeComponentsInNumber 1 num (fun x acc -> acc + 1) 0
 [<EntryPoint>]
 let main (args: string[]) =
 // №1
     printfn "Hello, World"
 
 // №2
-    System.Console.WriteLine("Введите коэффициенты квадратного уравения a, b, c:")
+    System.Console.WriteLine("Номер 2: Введите коэффициенты квадратного уравения a, b, c:")
     let a = Double.Parse(System.Console.ReadLine())
     let b = Double.Parse(System.Console.ReadLine())
     let c = Double.Parse(System.Console.ReadLine())
@@ -110,7 +113,7 @@ let main (args: string[]) =
         | Quadratic(x, y) -> System.Console.WriteLine("Корни: {0} {1}", x, y)
 
    // №3
-    System.Console.WriteLine("Введите радиус и высоту цилиндра:")
+    System.Console.WriteLine("Номер 3: Введите радиус и высоту цилиндра:")
     let r = Double.Parse(System.Console.ReadLine())
     let h = Double.Parse(System.Console.ReadLine())
     
@@ -191,5 +194,9 @@ let main (args: string[]) =
     let res = bypassMutuallyPrimeComponentsInNumber 1 10 (fun a b -> a + b) 0
     System.Console.WriteLine("{0}", res)
 
+     // №14
+    let num = Console.ReadLine()
+    let res =EulerFunction (int num)
+    System.Console.WriteLine("Функция Эйлера от {0} есть {1}", num, res)
     
     0   
