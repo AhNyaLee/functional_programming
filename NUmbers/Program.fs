@@ -145,11 +145,17 @@ let method3Count n =
     let sumPrime = sumPrimeDigits absN
     [1..absN]
     |> List.filter (fun k ->
-        (absN % k <> 0) &&          // Не делитель
-        (gcd k absN > 1) &&         // Не взаимно простые
-        (gcd k sumPrime = 1)        // Взаимно простые с суммой простых цифр
+        (absN % k <> 0) &&         
+        (gcd k absN > 1) &&        
+        (gcd k sumPrime = 1)       
     )
     |> List.length
+let chooseMethod (func_num: int, num: int) : unit =
+    match func_num with
+     1 -> sumNonPrimeDivisors num |> Console.WriteLine
+     | 2 -> countDigitsLessThan3 num |> Console.WriteLine
+     | 3 -> method3Count num |> Console.WriteLine
+     | _ -> Console.WriteLine("Неверный номер")
 
 [<EntryPoint>]
 let main (args: string[]) =
@@ -267,5 +273,11 @@ let main (args: string[]) =
     System.Console.WriteLine("Количество цифр числа, меньших 3 -{0}",anser1 )
     let anser2 =  method3Count 12
     System.Console.WriteLine("Количество чисел, не являющихся делителями исходного числа, не взамно простых с ним и взаимно простых с суммой простых цифр этого числа {0}",anser2 )
-
+    
+    //20
+    Console.Write("Введите номер метода: ")
+    let func_num = Console.ReadLine() |> int
+    Console.Write("Введите число: ")
+    let num = Console.ReadLine() |> int
+    chooseMethod (func_num, num)
     0   
