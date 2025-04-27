@@ -5,6 +5,15 @@ type SolveQuadratic =
     | Linear of float
     | Quadratic of float * float
 
+let rec gcd a b =
+    if b = 0 then a
+    else gcd b (a % b)
+
+let isPrime n =
+    if n <= 1 then false
+    else
+        let sqrtN = sqrt (float n) |> int
+        seq { 2 .. sqrtN } |> Seq.forall (fun i -> n % i <> 0)
 
 let solveQuadr a b c =
         let D = b * b - 4. * a * c
@@ -102,6 +111,45 @@ let rec bypassMutuallyPrimeWithCondition (current: int) (num: int) (func: int ->
        bypassMutuallyPrimeWithCondition (current + 1) num func (func accum current) condition
        | _ -> bypassMutuallyPrimeWithCondition (current + 1) num func accum condition
 
+
+// Метод 1: Сумма непростых делителей числа
+let sumNonPrimeDivisors n =
+    let absN = abs n
+    let divisors = [1..absN] |> List.filter (fun x -> absN % x = 0)
+    divisors
+    |> List.filter (fun d -> not (isPrime d))
+    |> List.sum
+
+// Метод 2: Количество цифр числа, меньших 3
+let countDigitsLessThan3 n =
+    let absN = abs n
+    absN.ToString().ToCharArray()
+    |> Array.map (fun c -> int c - int '0')
+    |> Array.filter (fun d -> d < 3)
+    |> Array.length
+
+// Вспомогательная функция для Метода 3: Сумма простых цифр числа
+let sumPrimeDigits n =
+    let digits = 
+        abs n
+        |> string
+        |> Seq.map (fun c -> int c - int '0')
+        |> Seq.toList
+    digits
+    |> List.filter (fun d -> List.contains d [2;3;5;7])
+    |> List.sum
+
+// Метод 3: Количество чисел, удовлетворяющих сложным условиям
+let method3Count n =
+    let absN = abs n
+    let sumPrime = sumPrimeDigits absN
+    [1..absN]
+    |> List.filter (fun k ->
+        (absN % k <> 0) &&          // Не делитель
+        (gcd k absN > 1) &&         // Не взаимно простые
+        (gcd k sumPrime = 1)        // Взаимно простые с суммой простых цифр
+    )
+    |> List.length
 
 [<EntryPoint>]
 let main (args: string[]) =
@@ -211,4 +259,13 @@ let main (args: string[]) =
     let num = 15
     let res = bypassMutuallyPrimeWithCondition 1 num (+) 0 (fun a -> a % 2 <> 0)
     System.Console.WriteLine("Сумма нечетных взаимно-простых чисел от 1 до {0} есть {1}", num, res)
+  
+    //16  
+    let anser =  sumNonPrimeDivisors 8
+    System.Console.WriteLine("Cуммa непростых делителей числа {0}",anser )
+    let anser1 =  countDigitsLessThan3 123
+    System.Console.WriteLine("Количество цифр числа, меньших 3 -{0}",anser1 )
+    let anser2 =  method3Count 12
+    System.Console.WriteLine("Количество чисел, не являющихся делителями исходного числа, не взамно простых с ним и взаимно простых с суммой простых цифр этого числа {0}",anser2 )
+
     0   
