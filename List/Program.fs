@@ -27,6 +27,25 @@ module ListOperations =
         | head :: tail when condition head -> reduceListWithCondition tail func condition (func head accum)
         | head :: tail when (condition head) = false  -> reduceListWithCondition tail func condition accum
         | _ -> failwith "Непредвиденная ошибка"
+    
+    let theMostFrequentInList list =
+        
+        let rec elemFrequentsInList list accum_map = 
+            match list with
+            [] -> accum_map
+            | head :: tail -> 
+                if Map.containsKey head accum_map then
+                    let currentCount = accum_map.[head]
+                    elemFrequentsInList tail (Map.add head (currentCount + 1) accum_map)
+                else
+                    elemFrequentsInList tail (Map.add head 1 accum_map)
+
+        let frequencyMap = elemFrequentsInList list Map.empty
+
+        let mostFrequent = 
+            frequencyMap |> Map.toSeq |> Seq.maxBy snd
+        
+        mostFrequent
 
     let sumEvenInList list =
          reduceListWithCondition list (+) (fun a -> a % 2 = 0) 0
@@ -36,6 +55,7 @@ module ListOperations =
  
     let minInList list =
          reduceListWithCondition list min (fun a -> true) 10
+
 
 module Program =
     [<EntryPoint>]
@@ -57,5 +77,11 @@ module Program =
 
         let countOdd = ListOperations.sumEvenInList numbers
         System.Console.WriteLine("Количество нечетных элементов в списке: {0}", countOdd)
+
+         // №5
+        let most_frequent = ListOperations.theMostFrequentInList [1; 5; 1; -6; 1; 0; 7; 3; 3]
+        System.Console.WriteLine("Элемент {0} в списке повторяется наибольшее число раз: {1}", (fst most_frequent), (snd most_frequent))
+ 
+
 
         0
