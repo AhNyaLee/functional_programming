@@ -112,7 +112,7 @@ let rec bypassMutuallyPrimeWithCondition (current: int) (num: int) (func: int ->
        | _ -> bypassMutuallyPrimeWithCondition (current + 1) num func accum condition
 
 
-// Метод 1: Сумма непростых делителей числа
+// Метод 1
 let sumNonPrimeDivisors n =
     let absN = abs n
     let divisors = [1..absN] |> List.filter (fun x -> absN % x = 0)
@@ -120,7 +120,7 @@ let sumNonPrimeDivisors n =
     |> List.filter (fun d -> not (isPrime d))
     |> List.sum
 
-// Метод 2: Количество цифр числа, меньших 3
+// Метод 2
 let countDigitsLessThan3 n =
     let absN = abs n
     absN.ToString().ToCharArray()
@@ -128,7 +128,6 @@ let countDigitsLessThan3 n =
     |> Array.filter (fun d -> d < 3)
     |> Array.length
 
-// Вспомогательная функция для Метода 3: Сумма простых цифр числа
 let sumPrimeDigits n =
     let digits = 
         abs n
@@ -139,7 +138,7 @@ let sumPrimeDigits n =
     |> List.filter (fun d -> List.contains d [2;3;5;7])
     |> List.sum
 
-// Метод 3: Количество чисел, удовлетворяющих сложным условиям
+// Метод 3
 let method3Count n =
     let absN = abs n
     let sumPrime = sumPrimeDigits absN
@@ -280,4 +279,5 @@ let main (args: string[]) =
     Console.Write("Введите число: ")
     let num = Console.ReadLine() |> int
     chooseMethod (func_num, num)
+    
     0   
