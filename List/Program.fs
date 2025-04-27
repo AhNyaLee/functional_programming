@@ -28,6 +28,15 @@ module ListOperations =
         | head :: tail when (condition head) = false  -> reduceListWithCondition tail func condition accum
         | _ -> failwith "Непредвиденная ошибка"
 
+    let sumEvenInList list =
+         reduceListWithCondition list (+) (fun a -> a % 2 = 0) 0
+ 
+    let countOddInList list =
+         reduceListWithCondition list (fun a _ -> a + 1) (fun a -> a % 2 <> 0) 0
+ 
+    let minInList list =
+         reduceListWithCondition list min (fun a -> true) 10
+
 module Program =
     [<EntryPoint>]
     let main args =
@@ -37,6 +46,16 @@ module Program =
         System.Console.WriteLine("Вывод элементов списка: ")
         ListOperations.writeList numbers
 
-        let reducedList = ListOperations.reduceListWithCondition [1; 6; 8; 10] (*) (fun a -> a % 2 = 0) 1
+        let reducedList = ListOperations.reduceListWithCondition numbers (*) (fun a -> a % 2 = 0) 1
         System.Console.WriteLine("Свернутое значение списка: {0}", reducedList)
+       // №4
+        let minElem = ListOperations.minInList numbers
+        System.Console.WriteLine("Минимальный элемент списка: {0}", minElem)
+
+        let sumEven = ListOperations.sumEvenInList numbers
+        System.Console.WriteLine("Сумма четных элемент списка: {0}", sumEven)
+
+        let countOdd = ListOperations.sumEvenInList numbers
+        System.Console.WriteLine("Количество нечетных элементов в списке: {0}", countOdd)
+
         0
