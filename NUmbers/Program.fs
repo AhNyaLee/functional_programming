@@ -94,7 +94,15 @@ let rec bypassMutuallyPrimeComponentsInNumber (current: int) (num: int) (func: i
  
 
 let EulerFunction (num: int) : int =
- bypassMutuallyPrimeComponentsInNumber 1 num (fun x acc -> acc + 1) 0
+  bypassMutuallyPrimeComponentsInNumber 1 num (fun x acc -> acc + 1) 0
+let rec bypassMutuallyPrimeWithCondition (current: int) (num: int) (func: int -> int -> int) (accum: int) (condition: int -> bool) =
+    match current with
+       x when x >= num -> accum
+       | x when GCD (num, x) = 1 && condition x -> 
+       bypassMutuallyPrimeWithCondition (current + 1) num func (func accum current) condition
+       | _ -> bypassMutuallyPrimeWithCondition (current + 1) num func accum condition
+
+
 [<EntryPoint>]
 let main (args: string[]) =
 // №1
@@ -194,9 +202,13 @@ let main (args: string[]) =
     let res = bypassMutuallyPrimeComponentsInNumber 1 10 (fun a b -> a + b) 0
     System.Console.WriteLine("{0}", res)
 
-     // №14
+    // №14
     let num = Console.ReadLine()
     let res =EulerFunction (int num)
     System.Console.WriteLine("Функция Эйлера от {0} есть {1}", num, res)
     
+    // № 15
+    let num = 15
+    let res = bypassMutuallyPrimeWithCondition 1 num (+) 0 (fun a -> a % 2 <> 0)
+    System.Console.WriteLine("Сумма нечетных взаимно-простых чисел от 1 до {0} есть {1}", num, res)
     0   
