@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "gFA1AgjT1385gjuz5RSKs1n8z1+hIrG/C2Q7UIoF2ghdD7i76bcBiDIJIA69A+wiVCdUBRNxdf2i6O27foSomg==",
+  "success": true,
+  "projectFilePath": "/home/ania3614/Documents/6 semester/functional_programming/F#/OOP/OOP.fsproj",
+  "expectedPackageFiles": [
+    "/home/ania3614/.nuget/packages/fsharp.core/8.0.102/fsharp.core.8.0.102.nupkg.sha512",
+    "/home/ania3614/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/home/ania3614/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+    "/home/ania3614/.nuget/packages/npgsql/9.0.3/npgsql.9.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

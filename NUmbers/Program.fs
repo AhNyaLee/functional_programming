@@ -50,7 +50,7 @@ let sumCifr n =
     sumCifrl n 0
 
 let rec factcir n =
-    if n = 1 then 1
+    if n = 0 then 1
     else n * (factcir (n - 1))
 
 let rec factcifr n =
@@ -169,7 +169,7 @@ let main (args: string[]) =
 
     let roots = solveQuadr a b c
     match roots with
-        None -> System.Console.WriteLine("Нет решений")
+        None -> System.Console.WriteLine("Нет действительных корней ")
         | Linear(x) -> System.Console.WriteLine("Единственный корень: {0}", x)
         | Quadratic(x, y) -> System.Console.WriteLine("Корни: {0} {1}", x, y)
 
